@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import org.springframework.hateoas.ResourceSupport;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name = "orders")
@@ -17,8 +18,10 @@ public class Order extends ResourceSupport {
 
 	@Id
 	@GeneratedValue
+	@JsonView(Views.Internel.class)
 	private Long orderId;
 
+	@JsonView(Views.Internel.class)
 	private String orderDesc;
 
 	@ManyToOne(fetch = FetchType.LAZY)

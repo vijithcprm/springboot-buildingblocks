@@ -16,39 +16,48 @@ import org.springframework.hateoas.ResourceSupport;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
 @Table(name = "user")
 //@JsonIgnoreProperties({"firstname","lastname"}) ---Static filtering json
-@JsonFilter(value = "userFilter")
+//@JsonFilter(value = "userFilter") -- used for MappingJacksonValue filtering section
 public class User extends ResourceSupport {
 
 	@Id
 	@GeneratedValue
+	@JsonView(Views.Externel.class)
 	private Long userId;
 
 	@NotEmpty(message = "Username is Mandatory field. Please provide username")
 	@Column(name = "user_name", length = 50, nullable = false, unique = true)
+	@JsonView(Views.Externel.class)
 	private String username;
 
 	@Size(min = 2, message = "FirstName should have atlease 2 characters")
 	@Column(name = "first_name", length = 50, nullable = false)
+	@JsonView(Views.Externel.class)
 	private String firstname;
 
 	@Column(name = "last_name", length = 50, nullable = false)
+	@JsonView(Views.Externel.class)
 	private String lastname;
 
 	@Column(name = "email", length = 50, nullable = false)
+	@JsonView(Views.Externel.class)
 	private String email;
 
 	@Column(name = "role", length = 50, nullable = false)
+	@JsonView(Views.Internel.class)
 	private String role;
 
 	@Column(name = "ssn", length = 50, nullable = false, unique = true)
-	//@JsonIgnore -- static filtering
+	// @JsonIgnore -- static filtering
+	@JsonView(Views.Internel.class)
 	private String ssn;
 
 	@OneToMany(mappedBy = "user")
+	@JsonView(Views.Internel.class)
 	private List<Order> orders;
 
 	public User() {

@@ -21,7 +21,7 @@ public class UserMapStructController {
 	@Autowired
 	private UserRepository userRepository;
 
-	@Autowired
+	/*@Autowired
 	private UserMapper userMapper;
 
 	@GetMapping
@@ -34,6 +34,6 @@ public class UserMapStructController {
 		Optional<User> userOptional = userRepository.findById(id);
 		User user = userOptional.get();
 		return userMapper.userToUserMsDto(user);
-	}
+	}*/
 
 }

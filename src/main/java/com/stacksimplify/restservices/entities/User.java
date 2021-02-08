@@ -18,23 +18,30 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description = "This model is used to create a user")
 @Entity
 @Table(name = "user")
 //@JsonIgnoreProperties({"firstname","lastname"}) ---Static filtering json
 //@JsonFilter(value = "userFilter") -- used for MappingJacksonValue filtering section
 public class User extends ResourceSupport {
 
+	@ApiModelProperty(notes = "Auto generated unique id",required = true,position = 1)
 	@Id
 	@GeneratedValue
 	@JsonView(Views.Externel.class)
 	private Long userId;
 
+	@ApiModelProperty(notes = "User name should be FL name",example = "vkumar",required = false,position = 2)
+	@Size(min = 2, max = 50)
 	@NotEmpty(message = "Username is Mandatory field. Please provide username")
 	@Column(name = "user_name", length = 50, nullable = false, unique = true)
 	@JsonView(Views.Externel.class)
 	private String username;
 
-	@Size(min = 2, message = "FirstName should have atlease 2 characters")
+	@Size(min = 2, max = 50,message = "FirstName should have atlease 2 characters")
 	@Column(name = "first_name", length = 50, nullable = false)
 	@JsonView(Views.Externel.class)
 	private String firstname;
